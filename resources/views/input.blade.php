@@ -1,1639 +1,692 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Input Data - SIMPEL BBLKL</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"><\/script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-
-
 <body class="bg-slate-50 text-slate-800">
 
-    {{-- SIDEBAR --}}
+@include('sidebar')
 
-    @include('sidebar')
+<main class="ml-64 min-h-screen p-6">
 
-
-    {{-- MAIN--}}
-
-    <main class="ml-64 min-h-screen p-6">
-
-        {{-- HEADER --}}
-        <section class="mb-6 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-purple-50 p-6 shadow-sm">
-
-            <div class="flex flex-wrap items-start justify-between gap-5">
-                
+    {{-- HEADER --}}
+    <section class="mb-6 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-purple-50 p-6 shadow-sm">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white text-xl shadow-sm">📊</div>
                 <div>
-                    <div class="flex items-center gap-3">
-
-                        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
-                            📊
-                        </div>
-
-                        <div>
-                            <h1 class="text-2xl font-bold text-slate-900">
-                                Input Bulanan
-                            </h1>
-
-                            <p class="mt-1 text-sm text-slate-500">
-                                Penginputan data uji resistensi laboratorium
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
-                        
-                        <span> 
-                            Lab:
-                            <strong class="text-slate-800">
-                                Balai Besar Laboratorium Kesehatan Lingkungan
-                            </strong>
-                        </span>
-
-                        <span>•</span>
-
-                        <span>
-                            Filter:
-                            <strong class="text-slate-800">
-                               Semua bulan 2026
-                            </strong>
-                        </span>
-
-                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900">Input Data</h1>
+                    <p class="mt-0.5 text-sm text-slate-500">Data uji resistensi nyamuk laboratorium</p>
                 </div>
-
-                {{-- PERIODE --}}
-                <div class="rounded-xl border-border-slate-200 bg-white px-5 py-4 shadow-sm">
-        
-                    <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                        Entri pada
-                    </p>
-
-                    <p class="mt-1 text-lg font-bold text-slate-800">
-                        Oktober 2026
-                    </p>
-
-                </div>
-
             </div>
-
-            {{-- FILTER --}}
-            <div class="mt-6 grid gap-4 md:grid-cols-2">
-                
-                {{-- BULAN --}}
-                <div>
-                    <label class="mb-2 block text-sm font-semibold text-slate-700">
-                        Bulan
-                    </label>
-
-                    <select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
-                        <option>
-                            Semua bulan
-                        </option>
-
-                        <option>
-                            Januari
-                        </option>
-
-                        <option>
-                            Februari
-                        </option>
-
-                        <option>
-                            Maret
-                        </option>
-
-                        <option>
-                            April
-                        </option>
-
-                        <option>
-                            Mei
-                        </option>
-
-                        <option>
-                            Juni
-                        </option>
-
-                        <option>
-                            Juli
-                        </option>
-
-                        <option>
-                            Agustus
-                        </option>
-
-                        <option>
-                            September
-                        </option>
-
-                        <option selected>
-                            Oktober
-                        </option>
-
-                        <option>
-                            November
-                        </option>
-
-                        <option>
-                            Desember
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                {{-- TAHUN --}}
-                <div>
-                    <label class="mb-2 block text-sm font-semibold ttext-slate-700">
-                        Tahun
-                    </label>
-
-                    <select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
-                        <option>
-                            2024
-                        </option>
-
-                        <option>
-                            2025
-                        </option>
-
-                        <option selected>
-                            2026
-                        </option>
-
-                        <option>
-                            2027
-                        </option>
-
-                    </select>
-
-                </div>
-
+            <div class="rounded-xl border border-slate-200 bg-white px-5 py-3 shadow-sm">
+                <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tahun Aktif</p>
+                <p class="mt-0.5 text-xl font-bold text-slate-800">{{ $tahun }}</p>
             </div>
-
-        </section>
-
-        {{-- STATISTIC CARDS --}}
-        <section class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-    
-            {{-- ITEM BULAN --}}
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                <div class="flex items-start justify-between">
-    
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Item
-                        </p>
-
-                        <p class="mt-1 text-sm text-slate-500">
-                            Filter Bulan
-                        </p>
-
-                    </div>
-                </div>
-
-                <p class="mt-4 text-3xl font-bold text-slate-900"> 
-                    {{ $data->count() }}
-                </p>
-
-            </div>
-
-            {{-- SAMPEL BULAN --}}
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                
-                <div class="flex items-start justify-between">
-                
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Sampel
-                        </p>
-
-                        <p class="mt-1 text-sm text-slate-500">
-                            Filter Bulan
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <p class="mt-4 text-3xl font-bold text-slate-900">
-                    {{ $data->sum('sampel_diperiksa') }}
-                </p>
-
-            </div>
-
-            {{-- ITEM TAHUN --}}
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                      
-                <div class="flex items-start justify-between">
-                          
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Item
-                        </p>
-
-                        <p class="mt-1 text-sm text-slate-500">
-                            Tahun Berjalan
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <p class="mt-4 text-3xl font-bold text-slate-900">
-                    {{ $data->count() }}
-                </p>
-
-            </div>
-
-            {{-- SAMPEL TAHUN --}}
-            <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                <div class="flex items-start justify-between">
-
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Sampel
-                        </p>
-
-                        <p class="mt-1 text-sm text-slate-500">
-                            Tahun Berjalan
-                        </p>
-
-                    </div>
-
-                </div>
-
-                <p class="mt-4 text-3xl font-bold text-slate-900">
-                    {{ $data->sum('sampel_diperiksa') }}
-                </p>
-
-            </div>
-
-        </section>
-
-        {{-- INFO --}}
-        <div class="mb-6 flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-5 py-4 text-sm text-bluee-800">
-
+        </div>
+        {{-- FILTER TAHUN --}}
+        <form method="GET" action="{{ route('input') }}" class="mt-5 flex items-end gap-3">
             <div>
-                <strong>
-                    Data yang akan di entri:
-                </strong>
-                Bulan Oktober, Tahun 2026
-            </div>
-
-        </div>
-
-        {{-- PESAN SUCCESS --}}
-
-        @if (session('success'))
-
-            <div class="mb-6 rounded-xl border border-green-200 bg-green-50 px-5 py-4 text-sm font-medium text-green-700">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        {{-- ERROR --}}
-
-        @if ($errors->any())
-
-            <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
- 
-                <p class="font-bold">
-                    Data belum dapat disimpan:
-                </p>
-
-                <ul class="mt-2 list-disc pl-5">
-                    @foreach ($errors->all() as $error)
-
-                        <li>
-                            {{ $error }}
-                        </li>
-
+                <label class="mb-1 block text-sm font-semibold text-slate-700">Filter Tahun</label>
+                <select name="tahun" onchange="this.form.submit()"
+                    class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
+                    @foreach(range(date('Y') - 3, date('Y') + 1) as $y)
+                        <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
                     @endforeach
-
-                </ul>
-
+                </select>
             </div>
+        </form>
+    </section>
 
-        @endif
+    {{-- STAT CARDS --}}
+    <section class="mb-6 grid grid-cols-2 gap-4 xl:grid-cols-4">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Total Entri</p>
+            <p class="text-xs text-slate-400 mt-0.5">Tahun {{ $tahun }}</p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">{{ $data->count() }}</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Total Sampel</p>
+            <p class="text-xs text-slate-400 mt-0.5">Tahun {{ $tahun }}</p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">{{ number_format($data->sum('sampel_diperiksa')) }}</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Provinsi</p>
+            <p class="text-xs text-slate-400 mt-0.5">Terdata</p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">{{ $data->unique('provinsi_id')->count() }}</p>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Kab/Kota</p>
+            <p class="text-xs text-slate-400 mt-0.5">Terdata</p>
+            <p class="mt-2 text-3xl font-bold text-slate-900">{{ $data->unique('kabupaten_id')->count() }}</p>
+        </div>
+    </section>
 
-        {{-- FORM INPUT --}}
-        <section class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+    {{-- ALERT --}}
+    @if (session('success'))
+        <div class="mb-5 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-5 py-3.5 text-sm font-medium text-green-700">
+            <svg class="h-5 w-5 shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+            {{ session('success') }}
+        </div>
+    @endif
+    @if ($errors->any())
+        <div class="mb-5 rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
+            <p class="font-bold">Data belum dapat disimpan:</p>
+            <ul class="mt-1.5 list-disc pl-5 space-y-0.5">
+                @foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+            </ul>
+        </div>
+    @endif
 
-            {{-- HEADER TABLE --}}
-            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 px-5 py-4">
+    {{-- ═══════════════════════════════════════════════════════
+         FORM INPUT — CARD PER ENTRI
+    ═══════════════════════════════════════════════════════ --}}
+    <section class="mb-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
 
-                <div class="flex items-center gap-3">
-
-                    <div class="h-3 w-3 rounded-full bg-blue-600"></div>
-
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-800">
-                            Form Entri
-                        </h2>
-
-                        <p class="text-xs text-slate-500">
-                            Masukkan data pemeriksaan laboratorium
-                        </p>
-
-                    </div>
-
+        {{-- Header form --}}
+        <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-6 py-4">
+            <div class="flex items-center gap-3">
+                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100">
+                    <svg class="h-4 w-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
                 </div>
-
-                <div class="flex flex-wrap gap-2">
-
-                    <button type="button" id="btnTambahBaris" class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
-                        + Tambah Baris
-                    </button>
-
+                <div>
+                    <h2 class="text-base font-bold text-slate-800">Form Input Data</h2>
+                    <p class="text-xs text-slate-500">Isi semua field lalu klik Simpan</p>
                 </div>
-
             </div>
-
-            {{-- FORM --}}
-            <form id="formInput" method="POST" action="{{ route('input.store') }}">
-                @csrf
-
-                {{-- TABLE WRAPPER --}}
-                <div class="overflow-x-auto">
-
-                    <table class="min-w-[1500px] w-full border-collapse">
-
-                        {{-- TABLE HEAD --}}
-                        <thead>
-                            <tr class="border-b border-slate-200 bg-slate-50">
-
-                                <th class="w-16 px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    No
-                                </th>
-
-                                <th  class="min-w-[220px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    Provinsi
-                                </th>
-
-                                <th class="min-w-[220px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    Kota/Kab
-                                </th>
-
-                                <th class="min-w-[190px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-
-                                    Jenis Nyamuk
-                                </th>
-
-                                <th class="min-w-[230px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500>">
-                                    Insektisida
-                                </th>
-
-                                <th class="min-w-[190px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    Metode
-                                </th>
-
-                                <th class="min-w-[170px] px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    Sampel Diperiksa
-                                </th>
-
-                                <th class="w-24 px-4 py-4 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
-                                    Aksi
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        {{-- TABLE BODY --}}
-                        <tbody id="tableBody">
-
-                            {{-- BARIS PERTAMA --}}
-                            <tr class="entry-row border-b border-slate-100 transition hover:bg-slate-50">
-
-                                {{-- NO --}}
-                                <td class="row-number px-4 py-4 align-top text-sm font-semibold text-slate-600">
-                                    1
-                                </td>
-
-                                {{-- PROVINSI --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <select 
-                                        name="rows[0][provinsi_id]" 
-                                        class="provinsi w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"      
-                                        required>
-
-                                        <option value="">
-                                            Pilih Provinsi
-                                        </option>
-
-                                        @foreach ($provinsis as $provinsi)
-
-                                            <option value="{{ $provinsi->id }}">
-                                                {{ $provinsi->nama_provinsi }}
-                                            </option>
-
-                                        @endforeach
-
-                                    </select>
-
-                                </td>
-
-
-                                {{-- KABUPATEN --}}
-
-                                <td class="px-4 py-4  align-top">
-
-                                    <select name="rows[0][kabupaten_id]" class="kabupaten w-full rounded-lg border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm text-slate-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 disabled:cursor-not-allowed"
-                                        disabled
-                                        required>
-
-                                        <option value="">
-                                            Pilih Provinsi Terlebih Dahulu
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
-
-                                {{-- Jenis Nyamuk --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <select 
-                                        name="rows[0][jenis_nyamuk]" 
-                                        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm"
-                                        required
-                                    >
-
-                                        <option value="">
-                                            Pilih Jenis
-                                        </option>
-
-                                        <option value="Ae. aegypti">
-                                            Ae. aegypti
-                                        </option>
-
-                                        <option value="Culex sp">
-                                            Culex sp
-                                        </option>
-
-                                        <option value="Anhopheles">
-                                            Anhopheles
-                                        </option>
-
-                                        <option value="Aedes sp">
-                                            Aedes sp
-                                        </option>
-
-                                        <option value="An. Farauti">
-                                            An. Farauti
-                                        </option>
-
-                                        <option value="An. Vagus">
-                                            An. Vagus
-                                        </option>
-
-                                        <option value="An. tessellatus">
-                                            An. tessellatus
-                                        </option>
-
-                                        <option value="An. sundaicus s.I">
-                                            An. sundaicus s.I
-                                        </option>
-
-                                        <option value="An. punctulatus s.I.">
-                                            An. punctulatus s.I.
-                                        </option>
-
-                                        <option value="An. peditaeniatus">
-                                            An. peditaeniatus
-                                        </option>
-
-                                        <option value="An. parensis">
-                                            An. parensis
-                                        </option>
-
-                                        <option value="An. letifer">
-                                            An. letifer
-                                        </option>
-
-                                        <option value="An. koliensis">
-                                            An. koliensis
-                                        </option>
-
-                                        <option value="An. kochi">
-                                            An. kochi
-                                        </option>
-
-                                        <option value="An. indefinitus">
-                                            An. indefinitus
-                                        </option>
-
-                                        <option value="An. hyrcanus s.I.">
-                                            An. hyrcanus s.I.
-                                        </option>
-
-                                        <option value="An. farauti s.s">
-                                            An. farauti s.s
-                                        </option>
-
-                                        <option value="An. barbirostris">
-                                            An. barbirostris
-                                        </option>
-
-                                        <option value="An. aconitus">
-                                            An. aconitus
-                                        </option>
-
-                                        <option value="An. Albopictus">
-                                            An. Albopictus
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
-                                {{-- INSEKTISIDA --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <select 
-                                        name="rows[0][insektisida]" 
-                                        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm"
-                                        required
-                                    >
-
-                                        <option value="">
-                                            Pilih Insektisida
-                                        </option>
-
-                                        <option value="Cypermethrin">
-                                            Cypermethrin
-                                        </option>
-
-                                        <option value="Lamdacyhalothrin">
-                                            Lamdacyhalothrin
-                                        </option>
-
-                                        <option value="Deltamethrin">
-                                            Deltamethrin
-                                        </option>
-
-                                        <option value="Alphacypermethrin">
-                                            Alphacypermethrin
-                                        </option>
-
-                                        <option value="Cyfluthrin">
-                                            Cyfluthrin
-                                        </option>
-
-                                        <option value="Permethrin">
-                                           Permethrin
-                                        </option>
-
-                                        <option value="Malathion">
-                                           Malathion
-                                        </option>
-
-                                        <option value="Deltamethrin 0,025%">
-                                           Deltamethrin 0,025%
-                                        </option>
-
-                                        <option value="Lambda-cyhalothrin 0,0025%">
-                                           Lambda-cyhalothrin 0,0025%
-                                        </option>
-
-                                        <option value="Temefos (Abate)">
-                                           Temefos (Abate)
-                                        </option>
-
-                                        <option value="Bendiocarb">
-                                           Bendiocarb
-                                        </option>
-
-                                        <option value="Sipermethrin">
-                                           Sipermethrin
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
-
-                                {{-- METODE --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <select 
-                                        name="rows[0][metode]" 
-                                        class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm"
-                                        required
-                                    >
-
-                                        <option value="">
-                                            Pilih Metode
-                                        </option>
-
-                                        <option value="Sequencing">
-                                            Sequencing
-                                        </option>
-
-                                        <option value="WHO Tube Bioassay">
-                                            WHO Tube Bioassay
-                                        </option>
-
-                                        <option value="WHO larval bioassay">
-                                            WHO larval bioassay
-                                        </option>
-
-                                        <option value="WHO susceptibilitity test">
-                                            WHO susceptibilitity test
-                                        </option>
-
-                                        <option value="WHO test kit_adullts">
-                                            WHO test kit_adults
-                                        </option>
-
-                                        <option value="CDC bottle_adults">
-                                            WHO bottle_adults
-                                        </option>
-
-                                        <option value="CDC bottle bioassay">
-                                            CDC bottle bioassay
-                                        </option>
-
-                                        <option value="WHO standars bioassay">
-                                            WHO standards bioassay
-                                        </option>
-
-                                    </select>
-
-                                </td>
-
-                                {{-- JUMLAH SAMPEL --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <input type="number" name="rows[0][sampel_diperiksa]" min="1" placeholder="0"
-                                        class="w-full
-                                               rounded-lg
-                                               border
-                                               border-slate-300
-                                               bg-white
-                                               px-3
-                                               py-2.5
-                                               text-sm
-                                               focus:border-blue-500
-                                               focus:outline-none
-                                               focus:ring-2
-                                               focus:ring-blue-100"
-                                        required
-                                    >
-
-                                </td>
-
-                                {{-- AKSI --}}
-                                <td class="px-4 py-4 align-top">
-
-                                    <button type="button" class="btnHapus rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50"
-                                        disabled
-                                    >
-                                        Hapus
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                {{-- FOOTER FORM --}}
-                <div class="flex flex-wrap items-center justify-between gap-4 border-t border-slate-200 bg-slate-200 px-5 py-4">
-
-                    <p class="text-xs text-slate-500">
-                        Gunakan tombol
-                        <strong>
-                            + Tambah Baris
-                        </strong>
-                        untuk menambahkan data lainnya.
-                    </p>
-
-                    <button type="submit" class="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                        Simpan Semua
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-        {{-- DATA YANG SUDAH TERSIMPAN --}}
-        <section class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
- 
-            <div class="border-b border-slate-200 px-5 py-4">
-
-                <h2 class="text-lg font-bold text-slate-800">
-                    Data Tersimpan
-                </h2>
-
-                <p class="mt-1 text-xs tetx-slate-500">
-                    Data yang sudah berhasil disimpan ke database.
-                </p>
-
-            </div>
-
-            <div class="overflow-x-auto">
-
-                <table class="w-full text-sm">
-
-                    <thead>
-                        <tr class="border-b border-slate-200 bg-slate-50">
-
-                            <th class="px-4 py-4 text-xs font-bold text-slate-500">
-                                No
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Provinsi
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Kota/Kab
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Jenis Nyamuk
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Insektisida
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Metode
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Sampel Diperiksa
-                            </th>
-
-                            <th class="px-4 py-3 text-xs font-bold text-slate-500">
-                                Aksi
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                        @forelse ($data as $item)
-                            <tr class="border-b border-slate-100 hover:bg-slate-50">
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->no }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->provinsi->nama_provinsi ?? '-' }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->kabupaten->nama_kabupaten ?? '-' }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->jenis_nyamuk }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->insektisida }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm">
-                                    {{ $item->metode }}
-                                </td>
-
-                                <td class="px-4 py-3 text-sm font-semibold">
-                                    {{ $item->sampel_diperiksa }}
-                                </td>
-
-                                <td class="px-4 py-3">
-                                    <button
-                                        type="button"
-                                        onclick="openDeleteModal({{ $item->id }})"
-                                        class="rounded-md border border-red-500 px-3 py-2 text-sm text-red-500 transition hover:bg-red-50"
-                                    >
-                                        Hapus
-                                    </button>
-                                </td>
-
-                            </tr>
-
-                        @empty
-
-                            <tr>
-                                <td colspan="8" class="px-4 py-10 text-center text-sm text-slate-400">
-                                    Belum ada data yang tersimpan.
-                                </td>
-
-                            </tr>
-
-                        @endforelse
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-    </main>
-
-            {{-- popup konfirmasi hapus --}}
-        <div
-            id="deleteModal"
-            class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/40 px-4">
-        
-            <div class="w-full max-w-sm rounded-xl bg-white p-6 shadow-2xl">
-
-                <div class="text-center">
-                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-                        <span class="text-xl font-bold text-red-600">
-                            !
-                        </span>
-                    </div>
-
-                    <h3 class="mt-4 text-lg font-bold text-slate-800">
-                        Hapus Data?
-                    </h3>
-
-                    <p class="mt-2 text-sm text-slate-500">
-                        Apakah kamu yakin ingin menghapus data ini?
-                        <br>
-                        Data yang sudah dihapus tidak dapat dikembalikan.
-                    </p>
-
-                </div>
-
-                <div class="mt-6 flex justify-center gap-3">
-                    <button 
-                        type="button"
-                        onclick="closeDeleteModal()"
-                        class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-                    >
-                        Batal
-                    </button>
-
-                    <form
-                        id="deleteForm"
-                        method="POST"
-                    >
-                        @csrf
-
-                        @method('DELETE')
-
-                        <button
-                            type="submit"
-                            class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
-                            >
-                                Ya, Hapus
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-            
+            <button type="button" id="btnTambahInput"
+                class="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                Tambah Input
+            </button>
         </div>
 
-
-    {{-- JAVASCRIPT --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tableBody = document.getElementById('tableBody');
-
-            const btnTambahBaris = document.getElementById('btnTambahBaris');
-
-                /*LOAD KABUPATEN*/
-                function loadKabupaten(
-                    provinsiSelect,
-                    kabupatenSelect
-                ) {
-
-                    const provinsiId =
-                        provinsiSelect.value;
-
-
-                    if (!provinsiId) {
-
-                        kabupatenSelect.innerHTML = `
-                            <option value="">
-                                Pilih Provinsi Terlebih Dahulu
-                            </option>
-                        `;
-
-                        kabupatenSelect.disabled =
-                            true;
-
-                        return;
-                    }
-
-
-                    kabupatenSelect.innerHTML = `
-                        <option value="">
-                            Memuat Kabupaten...
-                        </option>
-                    `;
-
-                    kabupatenSelect.disabled =
-                        true;
-
-
-                    fetch(
-                        `/kabupaten/${provinsiId}`
-                    )
-
-                    .then(response => {
-
-                        if (!response.ok) {
-
-                            throw new Error(
-                                'Gagal mengambil data kabupaten'
-                            );
-
-                        }
-
-                        return response.json();
-
-                    })
-
-                    .then(data => {
-
-                        kabupatenSelect.innerHTML = `
-                            <option value="">
-                                Pilih Kota/Kabupaten
-                            </option>
-                        `;
-
-
-                        if (data.length === 0) {
-
-                            kabupatenSelect.innerHTML = `
-                                <option value="">
-                                    Kabupaten tidak tersedia
-                                </option>
-                            `;
-
-                            kabupatenSelect.disabled =
-                                true;
-
-                            return;
-                        }
-
-
-                        data.forEach(
-                            function (item) {
-
-                                const option =
-                                    document.createElement(
-                                        'option'
-                                    );
-
-                                option.value =
-                                    item.id;
-
-                                option.textContent =
-                                    item.nama_kabupaten;
-
-                                kabupatenSelect.appendChild(
-                                    option
-                                );
-
-                            }
-                        );
-
-
-                        kabupatenSelect.disabled =
-                            false;
-
-                    })
-
-                    .catch(error => {
-
-                        console.error(
-                            'ERROR:',
-                            error
-                        );
-
-
-                        kabupatenSelect.innerHTML = `
-                            <option value="">
-                                Gagal memuat Kabupaten
-                            </option>
-                        `;
-
-
-                        kabupatenSelect.disabled =
-                            true;
-
-                    });
-
-                }
-
-
-                /*EVENT PROVINSI*/
-                function attachProvinsiEvent(
-                    row
-                ) {
-
-                    const provinsi =
-                        row.querySelector(
-                            '.provinsi'
-                        );
-
-                    const kabupaten =
-                        row.querySelector(
-                            '.kabupaten'
-                        );
-
-
-                    if (!provinsi ||
-                        !kabupaten) {
-                        return;
-                    }
-
-
-                    provinsi.addEventListener(
-                        'change',
-                        function () {
-
-                            loadKabupaten(
-                                provinsi,
-                                kabupaten
-                            );
-
-                        }
-                    );
-
-                }
-
-
-                /*UPDATE NOMOR*/
-                function updateNomor() {
-
-                    const rows =
-                        tableBody.querySelectorAll(
-                            '.entry-row'
-                        );
-
-
-                    rows.forEach(
-                        function (row, index) {
-
-                            const number =
-                                row.querySelector(
-                                    '.row-number'
-                                );
-
-                            if (number) {
-
-                                number.textContent =
-                                    index + 1;
-
-                            }
-
-                        }
-                    );
-
-
-                    const buttons =
-                        tableBody.querySelectorAll(
-                            '.btnHapus'
-                        );
-
-
-                    buttons.forEach(
-                        function (button) {
-
-                            button.disabled =
-                                rows.length <= 1;
-
-                        }
-                    );
-
-                }
-
-
-                /*EVENT HAPUS*/
-                function attachHapusEvent(
-                    row
-                ) {
-
-                    const button =
-                        row.querySelector(
-                            '.btnHapus'
-                        );
-
-
-                    if (!button) {
-                        return;
-                    }
-
-
-                    button.addEventListener(
-                        'click',
-                        function () {
-
-                            const rows =
-                                tableBody.querySelectorAll(
-                                    '.entry-row'
-                                );
-
-
-                            if (rows.length <= 1) {
-                                return;
-                            }
-
-
-                            row.remove();
-
-                            updateNomor();
-
-                        }
-                    );
-
-                }
-
-
-                /*TAMBAH BARIS*/
-                btnTambahBaris.addEventListener(
-                    'click',
-                    function () {
-
-                        const rows =
-                            tableBody.querySelectorAll(
-                                '.entry-row'
-                            );
-
-                        const index =
-                            rows.length;
-
-
-                        const row =
-                            document.createElement(
-                                'tr'
-                            );
-
-
-                        row.className =
-                            'entry-row border-b border-slate-100 hover:bg-slate-50';
-
-
-                        row.innerHTML = `
-
-                            <td
-                                class="row-number
-                                       px-4
-                                       py-4
-                                       align-top
-                                       text-sm
-                                       font-semibold
-                                       text-slate-600"
-                            >
-                                ${index + 1}
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <select
-                                    name="rows[${index}][provinsi_id]"
-                                    class="provinsi
-                                           w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-white
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Pilih Provinsi
-                                    </option>
-
-                                    @foreach ($provinsis as $provinsi)
-
-                                        <option
-                                            value="{{ $provinsi->id }}"
-                                        >
-                                            {{ $provinsi->nama_provinsi }}
-                                        </option>
-
-                                    @endforeach
-
-                                </select>
-
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <select
-                                    name="rows[${index}][kabupaten_id]"
-                                    class="kabupaten
-                                           w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-slate-100
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    disabled
-                                    required
-                                >
-
-                                    <option value="">
-                                        Pilih Provinsi Terlebih Dahulu
-                                    </option>
-
-                                </select>
-
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <select
-                                    name="rows[${index}][jenis_nyamuk]"
-                                    class="w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-white
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Pilih Jenis Nyamuk
-                                    </option>
-
-                                    <option value="Ae. aegypti">
-                                        Ae. aegypti
-                                    </option>
-
-                                    <option value="Culex sp">
-                                        Culex sp
-                                    </option>
-
-                                    <option value="Anhopheles">
-                                        Anhopheles
-                                    </option>
-
-                                    <option value="Aedes sp">
-                                        Aedes sp
-                                    </option>
-
-                                    <option value="Culex">
-                                        Culex
-                                    </option>
-
-                                    <option value="An. Farauti">
-                                        An. Farauti
-                                    </option>
-
-                                    <option value="An. Vagus">
-                                        An. Vagus
-                                    </option>
-
-                                    <option value="An. tessellatus">
-                                        An. tessellatus
-                                    </option>
-
-                                    <option value="An. sundaicus s.I.">
-                                        An. sundaicus s.I.
-                                    </option>
-
-                                    <option value="An. punctulatus">
-                                        An. punctulatus
-                                    </option>
-
-                                    <option value="An. peditaeniatus">
-                                        An. peditaeniatus
-                                    </option>
-
-                                    <option value="An. parensis">
-                                        An. parensis
-                                    </option>
-
-                                    <option value="An. letifer">
-                                        An. letifer
-                                    </option>
-
-                                    <option value="An. koliensis">
-                                        An. koliensis
-                                    </option>
-
-                                    <option value="An. kochi">
-                                        An. kochi
-                                    </option>
-
-                                    <option value="An. indefinitus">
-                                        An. indefinitus
-                                    </option>
-
-                                    <option value="An. hyrcanus s.I.">
-                                        An. hyrcanus s.I.
-                                    </option>
-
-                                    <option value="An. farauti s.s">
-                                        An. farauti s.s
-                                    </option>
-
-                                    <option value="An. barbirostris">
-                                        An. barbirostris
-                                    </option>
-
-                                    <option value="An. aconitus">
-                                        An. aconitus
-                                    </option>
-
-                                    <option value="An. Albopictus">
-                                        Ae. aegypti
-                                    </option>
-
-                                </select>
-
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <select
-                                    name="rows[${index}][insektisida]"
-                                    class="w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-white
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Pilih Insektisida
-                                    </option>
-
-                                    <option value="Cypermethrin">
-                                        Cypermethrin
-                                    </option>
-
-                                    <option value="Lamdacyhalothrin">
-                                        Lamdacyhalothrin
-                                    </option>
-
-                                    <option value="Deltamethrin">
-                                        Deltamethrin
-                                    </option>
-
-                                    <option value="Alphacypermethrin">
-                                        Alphacypermethrin
-                                    </option>
-
-                                    <option value="Cyfluthrin">
-                                        Cyfluthrin
-                                    </option>
-
-                                    <option value="Permethrin">
-                                        Permethrin
-                                    </option>
-
-                                    <option value="Malathion">
-                                        Malathion
-                                    </option>
-
-                                    <option value="Deltamethrin 0,025%">
-                                        Deltamethrin 0,025%
-                                    </option>
-
-                                    <option value="Lambda-cyhalothrin 0,0025%">
-                                        Lambda-cyhalothrin 0,0025%
-                                    </option>
-
-                                    <option value="Temefos (Abate)">
-                                        Temefos (Abate)
-                                    </option>
-
-                                    <option value="Bendiocarb">
-                                        Bendiocarb
-                                    </option>
-
-                                    <option value="Sipermethrin">
-                                        Sipermethrin
-                                    </option>
-
-                                </select>
-
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <select
-                                    name="rows[${index}][metode]"
-                                    class="w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-white
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Pilih Metode
-                                    </option>
-
-                                    <option value="Sequencing">
-                                        Sequencing
-                                    </option>
-
-                                    <option value="WHO Tube Bioassay">
-                                        WHO Tube Bioassay
-                                    </option>
-
-                                    <option value="WHO larval bioassay">
-                                        WHO larval bioasssay
-                                    </option>
-
-                                    <option value="WHO susceptibilitity test">
-                                        WHO susceptibilitity test
-                                    </option>
-
-                                    <option value="WHO test kit_adults">
-                                        WHO test kit_adults
-                                    </option>
-
-                                    <option value="CDC bottle_adults">
-                                        CDC bottle_adults
-                                    </option>
-
-                                    <option value="CDC bottle bioassay">
-                                        CDC bottle bioassay
-                                    </option>
-
-                                    <option value="WHO standard bioassay">
-                                        WHO standard bioassay
-                                    </option>
-
-                                </select>
-
-                            </td>
-
-                            <td class="px-4 py-4 align-top">
-
-                                <input
-                                    type="number"
-                                    name="rows[${index}][sampel_diperiksa]"
-                                    min="1"
-                                    placeholder="0"
-                                    class="w-full
-                                           rounded-lg
-                                           border
-                                           border-slate-300
-                                           bg-white
-                                           px-3
-                                           py-2.5
-                                           text-sm"
-                                    required
-                                >
-
-                            </td>
-
-
-                            <td class="px-4 py-4 align-top">
-
-                                <button
-                                    type="button"
-                                    class="btnHapus
-                                           rounded-lg
-                                           border
-                                           border-red-200
-                                           px-3
-                                           py-2
-                                           text-xs
-                                           font-semibold
-                                           text-red-600
-                                           hover:bg-red-50"
-                                >
+        {{-- Form --}}
+        <form id="formInput" method="POST" action="{{ route('input.store') }}">
+            @csrf
+
+            {{-- Container semua card entri --}}
+            <div id="entryContainer" class="divide-y divide-slate-100 p-6 space-y-5">
+
+                {{-- CARD ENTRI PERTAMA --}}
+                <div class="entry-card relative rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-blue-200 hover:shadow-sm" data-index="0">
+
+                    {{-- Badge nomor + tombol hapus baris --}}
+                    <div class="mb-4 flex items-center justify-between">
+                        <span class="entry-badge inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-3 py-1 text-xs font-bold text-white">
+                            <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                            </svg>
+                            Entri #1
+                        </span>
+                        <button type="button" class="btnHapusCard flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-50 opacity-30 cursor-not-allowed">
+                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"/>
+                            </svg>
+                            Hapus Entri
+                        </button>
+                    </div>
+
+                    {{-- Grid field 3 kolom --}}
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+
+                        {{-- PROVINSI --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Provinsi <span class="text-red-400 normal-case">*</span></label>
+                            <select name="rows[0][provinsi_id]" class="provinsi w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                                <option value="">— Pilih Provinsi —</option>
+                                @foreach ($provinsis as $p)
+                                    <option value="{{ $p->id }}">{{ $p->nama_provinsi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- KABUPATEN --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Kota / Kabupaten <span class="text-red-400 normal-case">*</span></label>
+                            <select name="rows[0][kabupaten_id]" class="kabupaten w-full rounded-xl border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm text-slate-500 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" disabled required>
+                                <option value="">Pilih provinsi dulu</option>
+                            </select>
+                        </div>
+
+                        {{-- JENIS NYAMUK --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jenis Nyamuk <span class="text-red-400 normal-case">*</span></label>
+                            <select name="rows[0][jenis_nyamuk]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                                <option value="">— Pilih Jenis —</option>
+                                <option>Ae. aegypti</option><option>Ae. albopictus</option>
+                                <option>Aedes sp</option><option>Culex sp</option>
+                                <option>Anopheles</option><option>An. aconitus</option>
+                                <option>An. barbirostris</option><option>An. farauti s.s</option>
+                                <option>An. Farauti</option><option>An. hyrcanus s.l.</option>
+                                <option>An. indefinitus</option><option>An. kochi</option>
+                                <option>An. koliensis</option><option>An. letifer</option>
+                                <option>An. parensis</option><option>An. peditaeniatus</option>
+                                <option>An. punctulatus s.l.</option><option>An. sundaicus s.l.</option>
+                                <option>An. tessellatus</option><option>An. Vagus</option>
+                            </select>
+                        </div>
+
+                        {{-- INSEKTISIDA --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Insektisida <span class="text-red-400 normal-case">*</span></label>
+                            <select name="rows[0][insektisida]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                                <option value="">— Pilih Insektisida —</option>
+                                <option>Alphacypermethrin</option><option>Bendiocarb</option>
+                                <option>Cypermethrin</option><option>Cyfluthrin</option>
+                                <option>Deltamethrin</option><option>Deltamethrin 0,025%</option>
+                                <option>Lambda-cyhalothrin 0,0025%</option><option>Lamdacyhalothrin</option>
+                                <option>Malathion</option><option>Permethrin</option>
+                                <option>Sipermethrin</option><option>Temefos (Abate)</option>
+                            </select>
+                        </div>
+
+                        {{-- METODE --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Metode Uji <span class="text-red-400 normal-case">*</span></label>
+                            <select name="rows[0][metode]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                                <option value="">— Pilih Metode —</option>
+                                <option>CDC bottle adults</option><option>CDC bottle bioassay</option>
+                                <option>Sequencing</option><option>WHO larval bioassay</option>
+                                <option>WHO standard bioassay</option><option>WHO susceptibility test</option>
+                                <option>WHO test kit adults</option><option>WHO Tube Bioassay</option>
+                            </select>
+                        </div>
+
+                        {{-- SAMPEL --}}
+                        <div>
+                            <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jumlah Sampel <span class="text-red-400 normal-case">*</span></label>
+                            <input type="number" name="rows[0][sampel_diperiksa]" min="1" placeholder="Contoh: 25"
+                                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                        </div>
+
+                    </div>
+                </div>
+                {{-- / card entri pertama --}}
+
+            </div>
+            {{-- / entry container --}}
+
+            {{-- Footer form --}}
+            <div class="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-6 py-4">
+                <p class="text-xs text-slate-500">
+                    <span id="entryCount">1</span> entri siap disimpan
+                </p>
+                <button type="submit"
+                    class="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 active:scale-95">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    Simpan Semua
+                </button>
+            </div>
+
+        </form>
+    </section>
+
+    {{-- ═══════════════════════════════════════════════════════
+         TABEL DATA TERSIMPAN
+    ═══════════════════════════════════════════════════════ --}}
+    <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+            <div>
+                <h2 class="text-base font-bold text-slate-800">Data Tersimpan</h2>
+                <p class="mt-0.5 text-xs text-slate-500">{{ $data->count() }} entri &bull; tahun {{ $tahun }}</p>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-[1000px] w-full text-sm">
+                <thead>
+                    <tr class="border-b border-slate-200 bg-slate-50 text-left text-xs font-bold uppercase tracking-wide text-slate-500">
+                        <th class="w-10 px-5 py-3">#</th>
+                        <th class="px-5 py-3">Provinsi</th>
+                        <th class="px-5 py-3">Kota/Kab</th>
+                        <th class="px-5 py-3">Jenis Nyamuk</th>
+                        <th class="px-5 py-3">Insektisida</th>
+                        <th class="px-5 py-3">Metode</th>
+                        <th class="px-5 py-3 text-right">Sampel</th>
+                        <th class="px-5 py-3 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse ($data as $item)
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="px-5 py-3 text-slate-400 text-xs">{{ $loop->iteration }}</td>
+                        <td class="px-5 py-3 font-medium">{{ $item->provinsi->nama_provinsi ?? '-' }}</td>
+                        <td class="px-5 py-3 text-slate-600">{{ $item->kabupaten->nama_kabupaten ?? '-' }}</td>
+                        <td class="px-5 py-3">
+                            <span class="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">{{ $item->jenis_nyamuk }}</span>
+                        </td>
+                        <td class="px-5 py-3 text-slate-600">{{ $item->insektisida }}</td>
+                        <td class="px-5 py-3 text-slate-600">{{ $item->metode }}</td>
+                        <td class="px-5 py-3 text-right font-bold text-slate-800">{{ number_format($item->sampel_diperiksa) }}</td>
+                        <td class="px-5 py-3">
+                            <div class="flex items-center justify-center gap-2">
+                                <button type="button"
+                                    onclick="openEditModal({{ $item->id }}, {{ $item->provinsi_id }}, {{ $item->kabupaten_id }}, '{{ addslashes($item->jenis_nyamuk) }}', '{{ addslashes($item->insektisida) }}', '{{ addslashes($item->metode) }}', {{ $item->sampel_diperiksa }})"
+                                    class="flex items-center gap-1 rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-600 transition hover:bg-blue-100">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button type="button"
+                                    onclick="openDeleteModal({{ $item->id }})"
+                                    class="flex items-center gap-1 rounded-lg border border-red-300 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-100">
+                                    <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"/>
+                                    </svg>
                                     Hapus
                                 </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="px-5 py-14 text-center">
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-full bg-slate-100">
+                                    <svg class="h-7 w-7 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                                    </svg>
+                                </div>
+                                <p class="text-sm font-medium text-slate-500">Belum ada data untuk tahun {{ $tahun }}</p>
+                                <p class="text-xs text-slate-400">Isi form di atas untuk menambahkan data baru.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-                            </td>
+</main>
 
-                        `;
+{{-- ═══════════════════════════════════════════════════════
+     CARD TEMPLATE (di-render server, di-clone JS)
+═══════════════════════════════════════════════════════ --}}
+<template id="cardTemplate">
+    <div class="entry-card relative rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-blue-200 hover:shadow-sm" data-index="__IDX__">
+        <div class="mb-4 flex items-center justify-between">
+            <span class="entry-badge inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-3 py-1 text-xs font-bold text-white">
+                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                </svg>
+                Entri #__NUM__
+            </span>
+            <button type="button" class="btnHapusCard flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-50">
+                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"/>
+                </svg>
+                Hapus Entri
+            </button>
+        </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Provinsi <span class="text-red-400 normal-case">*</span></label>
+                <select name="rows[__IDX__][provinsi_id]" class="provinsi w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                    <option value="">— Pilih Provinsi —</option>
+                    @foreach ($provinsis as $p)
+                        <option value="{{ $p->id }}">{{ $p->nama_provinsi }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Kota / Kabupaten <span class="text-red-400 normal-case">*</span></label>
+                <select name="rows[__IDX__][kabupaten_id]" class="kabupaten w-full rounded-xl border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm text-slate-500 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" disabled required>
+                    <option value="">Pilih provinsi dulu</option>
+                </select>
+            </div>
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jenis Nyamuk <span class="text-red-400 normal-case">*</span></label>
+                <select name="rows[__IDX__][jenis_nyamuk]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                    <option value="">— Pilih Jenis —</option>
+                    <option>Ae. aegypti</option><option>Ae. albopictus</option>
+                    <option>Aedes sp</option><option>Culex sp</option>
+                    <option>Anopheles</option><option>An. aconitus</option>
+                    <option>An. barbirostris</option><option>An. farauti s.s</option>
+                    <option>An. Farauti</option><option>An. hyrcanus s.l.</option>
+                    <option>An. indefinitus</option><option>An. kochi</option>
+                    <option>An. koliensis</option><option>An. letifer</option>
+                    <option>An. parensis</option><option>An. peditaeniatus</option>
+                    <option>An. punctulatus s.l.</option><option>An. sundaicus s.l.</option>
+                    <option>An. tessellatus</option><option>An. Vagus</option>
+                </select>
+            </div>
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Insektisida <span class="text-red-400 normal-case">*</span></label>
+                <select name="rows[__IDX__][insektisida]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                    <option value="">— Pilih Insektisida —</option>
+                    <option>Alphacypermethrin</option><option>Bendiocarb</option>
+                    <option>Cypermethrin</option><option>Cyfluthrin</option>
+                    <option>Deltamethrin</option><option>Deltamethrin 0,025%</option>
+                    <option>Lambda-cyhalothrin 0,0025%</option><option>Lamdacyhalothrin</option>
+                    <option>Malathion</option><option>Permethrin</option>
+                    <option>Sipermethrin</option><option>Temefos (Abate)</option>
+                </select>
+            </div>
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Metode Uji <span class="text-red-400 normal-case">*</span></label>
+                <select name="rows[__IDX__][metode]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                    <option value="">— Pilih Metode —</option>
+                    <option>CDC bottle adults</option><option>CDC bottle bioassay</option>
+                    <option>Sequencing</option><option>WHO larval bioassay</option>
+                    <option>WHO standard bioassay</option><option>WHO susceptibility test</option>
+                    <option>WHO test kit adults</option><option>WHO Tube Bioassay</option>
+                </select>
+            </div>
+            <div>
+                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jumlah Sampel <span class="text-red-400 normal-case">*</span></label>
+                <input type="number" name="rows[__IDX__][sampel_diperiksa]" min="1" placeholder="Contoh: 25"
+                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+            </div>
+        </div>
+    </div>
+</template>
 
+{{-- MODAL EDIT --}}
+<div id="editModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4">
+    <div class="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold text-slate-800">Edit Data</h3>
+                <p class="text-xs text-slate-500 mt-0.5">Ubah data uji resistensi</p>
+            </div>
+            <button type="button" onclick="closeEditModal()" class="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <form id="editForm" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="grid grid-cols-2 gap-4 p-6">
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Provinsi <span class="text-red-500">*</span></label>
+                    <select id="editProvinsi" name="provinsi_id" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                        <option value="">Pilih Provinsi</option>
+                        @foreach ($provinsis as $p)
+                            <option value="{{ $p->id }}">{{ $p->nama_provinsi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Kota/Kabupaten <span class="text-red-500">*</span></label>
+                    <select id="editKabupaten" name="kabupaten_id" class="w-full rounded-xl border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" disabled required>
+                        <option value="">Pilih Provinsi Dulu</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Jenis Nyamuk <span class="text-red-500">*</span></label>
+                    <select id="editJenisNyamuk" name="jenis_nyamuk" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                        <option value="">Pilih Jenis</option>
+                        <option>Ae. aegypti</option><option>Ae. albopictus</option>
+                        <option>Aedes sp</option><option>Culex sp</option>
+                        <option>Anopheles</option><option>An. aconitus</option>
+                        <option>An. barbirostris</option><option>An. farauti s.s</option>
+                        <option>An. Farauti</option><option>An. hyrcanus s.l.</option>
+                        <option>An. indefinitus</option><option>An. kochi</option>
+                        <option>An. koliensis</option><option>An. letifer</option>
+                        <option>An. parensis</option><option>An. peditaeniatus</option>
+                        <option>An. punctulatus s.l.</option><option>An. sundaicus s.l.</option>
+                        <option>An. tessellatus</option><option>An. Vagus</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Insektisida <span class="text-red-500">*</span></label>
+                    <select id="editInsektisida" name="insektisida" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                        <option value="">Pilih Insektisida</option>
+                        <option>Alphacypermethrin</option><option>Bendiocarb</option>
+                        <option>Cypermethrin</option><option>Cyfluthrin</option>
+                        <option>Deltamethrin</option><option>Deltamethrin 0,025%</option>
+                        <option>Lambda-cyhalothrin 0,0025%</option><option>Lamdacyhalothrin</option>
+                        <option>Malathion</option><option>Permethrin</option>
+                        <option>Sipermethrin</option><option>Temefos (Abate)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Metode <span class="text-red-500">*</span></label>
+                    <select id="editMetode" name="metode" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                        <option value="">Pilih Metode</option>
+                        <option>CDC bottle adults</option><option>CDC bottle bioassay</option>
+                        <option>Sequencing</option><option>WHO larval bioassay</option>
+                        <option>WHO standard bioassay</option><option>WHO susceptibility test</option>
+                        <option>WHO test kit adults</option><option>WHO Tube Bioassay</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1.5 block text-sm font-semibold text-slate-700">Sampel Diperiksa <span class="text-red-500">*</span></label>
+                    <input type="number" id="editSampel" name="sampel_diperiksa" min="1"
+                        class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4 rounded-b-2xl">
+                <button type="button" onclick="closeEditModal()" class="rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100">
+                    Batal
+                </button>
+                <button type="submit" class="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                    Simpan Perubahan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
-                        tableBody.appendChild(
-                            row
-                        );
+{{-- MODAL HAPUS --}}
+<div id="deleteModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4">
+    <div class="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+        <div class="text-center">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+                <svg class="h-7 w-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M10.3 3.8L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L12.7 3.8a2 2 0 00-3.4 0z"/>
+                </svg>
+            </div>
+            <h3 class="mt-4 text-lg font-bold text-slate-800">Hapus Data?</h3>
+            <p class="mt-2 text-sm text-slate-500">Data yang sudah dihapus tidak dapat dikembalikan.</p>
+        </div>
+        <div class="mt-6 flex justify-center gap-3">
+            <button type="button" onclick="closeDeleteModal()" class="rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                Batal
+            </button>
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700">
+                    Ya, Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
+<script>
+const KABUPATEN_URL = '{{ url("/kabupaten") }}';
+const INPUT_URL     = '{{ url("/input") }}';
 
-                        attachProvinsiEvent(
-                            row
-                        );
+/* ═══ LOAD KABUPATEN ═══════════════════════════════════ */
+function loadKabupaten(provSel, kabSel, selectedId) {
+    const id = provSel.value;
+    if (!id) {
+        kabSel.innerHTML = '<option value="">Pilih provinsi dulu</option>';
+        kabSel.disabled = true;
+        kabSel.classList.replace('bg-white', 'bg-slate-100');
+        return;
+    }
+    kabSel.innerHTML = '<option>Memuat data...</option>';
+    kabSel.disabled = true;
 
-                        attachHapusEvent(
-                            row
-                        );
+    fetch(KABUPATEN_URL + '/' + id)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(list => {
+            kabSel.innerHTML = '<option value="">— Pilih Kota/Kabupaten —</option>';
+            list.forEach(item => {
+                const o = document.createElement('option');
+                o.value = item.id;
+                o.textContent = item.nama_kabupaten;
+                if (selectedId && item.id == selectedId) o.selected = true;
+                kabSel.appendChild(o);
+            });
+            kabSel.disabled = false;
+            kabSel.classList.replace('bg-slate-100', 'bg-white');
+            kabSel.classList.replace('text-slate-500', 'text-slate-700');
+        })
+        .catch(() => {
+            kabSel.innerHTML = '<option value="">Gagal memuat</option>';
+        });
+}
 
-                        updateNomor();
+/* ═══ ATTACH EVENTS KE CARD ════════════════════════════ */
+function attachCardEvents(card) {
+    const prov = card.querySelector('.provinsi');
+    const kab  = card.querySelector('.kabupaten');
+    const btn  = card.querySelector('.btnHapusCard');
 
-                    }
-                );
+    if (prov && kab) {
+        prov.addEventListener('change', () => loadKabupaten(prov, kab, null));
+    }
+    if (btn) {
+        btn.addEventListener('click', () => {
+            const cards = document.querySelectorAll('.entry-card');
+            if (cards.length <= 1) return;
+            card.remove();
+            reindexCards();
+        });
+    }
+}
 
+/* ═══ REINDEX SEMUA CARD ═══════════════════════════════ */
+function reindexCards() {
+    const cards = document.querySelectorAll('.entry-card');
+    cards.forEach((card, i) => {
+        // Update badge
+        const badge = card.querySelector('.entry-badge');
+        if (badge) badge.childNodes[badge.childNodes.length - 1].textContent = ' Entri #' + (i + 1);
 
-                /*BARIS PERTAMA*/
-                const firstRow =
-                    tableBody.querySelector(
-                        '.entry-row'
-                    );
+        // Reindex semua name
+        card.querySelectorAll('[name]').forEach(el => {
+            el.name = el.name.replace(/rows\[\d+\]/, 'rows[' + i + ']');
+        });
 
+        // Update data-index
+        card.dataset.index = i;
 
-                attachProvinsiEvent(
-                    firstRow
-                );
+        // Tombol hapus — disable jika hanya 1 card
+        const btn = card.querySelector('.btnHapusCard');
+        if (!btn) return;
+        if (cards.length <= 1) {
+            btn.classList.add('opacity-30', 'cursor-not-allowed');
+        } else {
+            btn.classList.remove('opacity-30', 'cursor-not-allowed');
+        }
+    });
 
+    // Update counter
+    const counter = document.getElementById('entryCount');
+    if (counter) counter.textContent = cards.length;
+}
 
-                attachHapusEvent(
-                    firstRow
-                );
+/* ═══ TAMBAH INPUT BARU ════════════════════════════════ */
+document.getElementById('btnTambahInput').addEventListener('click', function () {
+    const cards    = document.querySelectorAll('.entry-card');
+    const idx      = cards.length;
+    const template = document.getElementById('cardTemplate');
+    const clone    = template.content.cloneNode(true);
+    const card     = clone.querySelector('.entry-card');
 
+    // Ganti __IDX__ dan __NUM__
+    card.querySelectorAll('[name]').forEach(el => {
+        el.name = el.name.replace('__IDX__', idx);
+    });
+    card.dataset.index = idx;
+    const badge = card.querySelector('.entry-badge');
+    if (badge) badge.childNodes[badge.childNodes.length - 1].textContent = ' Entri #' + (idx + 1);
 
-                updateNomor();
+    document.getElementById('entryContainer').appendChild(card);
+    attachCardEvents(document.querySelector('.entry-card:last-child'));
+    reindexCards();
 
-            }
-        );
+    // Scroll ke card baru
+    document.querySelector('.entry-card:last-child').scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
 
-    </script>
+/* ═══ INIT CARD PERTAMA ════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+    const firstCard = document.querySelector('.entry-card');
+    if (firstCard) { attachCardEvents(firstCard); reindexCards(); }
+});
 
-    <script>
-        window.openDeleteModal = function(id)
-        {
-            const modal = document.getElementById('deleteModal');
-            const form = document.getElementById('deleteForm');
+/* ═══ MODAL EDIT ═══════════════════════════════════════ */
+window.openEditModal = function(id, provinsiId, kabupatenId, jenisNyamuk, insektisida, metode, sampel) {
+    document.getElementById('editForm').action = INPUT_URL + '/' + id;
+    document.getElementById('editJenisNyamuk').value = jenisNyamuk;
+    document.getElementById('editInsektisida').value = insektisida;
+    document.getElementById('editMetode').value      = metode;
+    document.getElementById('editSampel').value      = sampel;
 
-            if (!modal || !form) {
-                console.error('Popup atau form hapus tidak ditemukan');
-                return;
-            }
+    const provSel = document.getElementById('editProvinsi');
+    const kabSel  = document.getElementById('editKabupaten');
+    provSel.value = provinsiId;
 
-            //menemukan data yg akan dihapus
-            form.action = '/input/' + id;
+    kabSel.innerHTML = '<option>Memuat...</option>';
+    kabSel.disabled = true;
+    fetch(KABUPATEN_URL + '/' + provinsiId)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(list => {
+            kabSel.innerHTML = '<option value="">— Pilih Kota/Kabupaten —</option>';
+            list.forEach(item => {
+                const o = document.createElement('option');
+                o.value = item.id;
+                o.textContent = item.nama_kabupaten;
+                if (item.id == kabupatenId) o.selected = true;
+                kabSel.appendChild(o);
+            });
+            kabSel.disabled = false;
+            kabSel.classList.replace('bg-slate-100', 'bg-white');
+        })
+        .catch(() => { kabSel.innerHTML = '<option value="">Gagal memuat</option>'; });
 
-            //tampilan data yg akan dihapus
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        };
-        
-        window.closeDeleteModal = function()
-        {
-            const modal = document.getElementById('deleteModal');
+    provSel.onchange = function() {
+        loadKabupaten(provSel, kabSel, null);
+    };
 
-            if (!modal) {
-                return;
-            }
+    const modal = document.getElementById('editModal');
+    modal.classList.replace('hidden', 'flex');
+};
 
-            //sembunyikan popup
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-        };
-    </script>
+window.closeEditModal = function() {
+    document.getElementById('editModal').classList.replace('flex', 'hidden');
+    document.getElementById('editProvinsi').onchange = null;
+};
+
+/* ═══ MODAL HAPUS ══════════════════════════════════════ */
+window.openDeleteModal = function(id) {
+    document.getElementById('deleteForm').action = INPUT_URL + '/' + id;
+    document.getElementById('deleteModal').classList.replace('hidden', 'flex');
+};
+
+window.closeDeleteModal = function() {
+    document.getElementById('deleteModal').classList.replace('flex', 'hidden');
+};
+
+// Tutup modal klik overlay
+['editModal', 'deleteModal'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+        if (e.target === this) this.classList.replace('flex', 'hidden');
+    });
+});
+</script>
 
 </body>
-
 </html>

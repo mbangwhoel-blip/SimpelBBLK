@@ -187,37 +187,43 @@
 
         <div class="flex items-center gap-3">
 
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold">
-                A
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
+                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
             </div>
 
             <div class="min-w-0 flex-1">
 
-                <p class="truncate text-sm font-semibold">
-                    Admin
+                <p class="truncate text-sm font-semibold text-white">
+                    {{ auth()->user()->name ?? 'Admin' }}
                 </p>
 
                 <p class="truncate text-xs text-slate-400">
-                    Administrator
+                    {{ auth()->user()->username ?? '' }}
                 </p>
 
             </div>
 
-            <button class="rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-red-400">
+            {{-- LOGOUT --}}
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button
+                    type="submit"
+                    class="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-red-400"
+                    title="Keluar"
+                >
+                    <svg class="h-5 w-5"
+                         fill="none"
+                         stroke="currentColor"
+                         viewBox="0 0 24 24">
 
-                <svg class="h-5 w-5"
-                     fill="none"
-                     stroke="currentColor"
-                     viewBox="0 0 24 24">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1"/>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2h5a2 2 0 012 2v1"/>
-
-                </svg>
-
-            </button>
+                    </svg>
+                </button>
+            </form>
 
         </div>
 

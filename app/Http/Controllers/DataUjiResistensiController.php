@@ -54,6 +54,43 @@ class DataUjiResistensiController extends Controller
         return redirect()->route('input')->with('success', 'Data berhasil disimpan.');
     }
 
+    public function edit($id)
+    {
+        $item = DataUjiResistensi::with(['provinsi', 'kabupaten'])->findOrFail($id);
+        return response()->json($item);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'provinsi_id'      => 'required|exists:provinsis,id',
+            'kabupaten_id'     => 'required|exists:kabupatens,id',
+            'jenis_nyamuk'     => 'required|string',
+            'insektisida'      => 'required|string',
+            'metode'           => 'required|string',
+            'sampel_diperiksa' => 'required|integer|min:1',
+        ]);
+
+        $item = DataUjiResistensi::findOrFail($id);
+
+        Kabupaten::where('id', $request->kabupaten_id)
+            ->where('provinsi_id', $request->provinsi_id)
+            ->firstOrFail();
+
+        $item->update([
+            'provinsi_id'      => $request->provinsi_id,
+            'kabupaten_id'     => $request->kabupaten_id,
+            'jenis_nyamuk'     => $request->jenis_nyamuk,
+            'insektisida'      => $request->insektisida,
+            'metode'           => $request->metode,
+            'sampel_diperiksa' => $request->sampel_diperiksa,
+        ]);
+
+        return redirect()
+            ->route('input', ['tahun' => $item->tahun])
+            ->with('success', 'Data berhasil diperbarui.');
+    }
+
     public function getKabupaten($provinsi_id)
     {
         $kabupatens = Kabupaten::where('provinsi_id', $provinsi_id)
@@ -64,14 +101,29 @@ class DataUjiResistensiController extends Controller
 
     public function dashboard()
     {
+        $tahun = date('Y');
         $data = DataUjiResistensi::with(['provinsi', 'kabupaten'])->get();
-        return view('dashboard', compact('data'));
+        $totalPengujian  = DataUjiResistensi::count();
+        $totalSampel     = DataUjiResistensi::sum('sampel_diperiksa');
+        $totalProvinsi   = DataUjiResistensi::distinct('provinsi_id')->count('provinsi_id');
+        $totalKabupaten  = DataUjiResistensi::distinct('kabupaten_id')->count('kabupaten_id');
+        $dataTerbaru = DataUjiResistensi::with(['provinsi', 'kabupaten'])
+            ->latest()->limit(10)->get();
+        $distribusiNyamuk = DataUjiResistensi::select('jenis_nyamuk', DB::raw('count(*) as total'))
+            ->groupBy('jenis_nyamuk')->orderByDesc('total')->limit(5)->get();
+        $totalDistribusi = $distribusiNyamuk->sum('total') ?: 1;
+
+        return view('dashboard', compact(
+            'data', 'tahun', 'totalPengujian', 'totalSampel',
+            'totalProvinsi', 'totalKabupaten', 'dataTerbaru',
+            'distribusiNyamuk', 'totalDistribusi'
+        ));
     }
 
     public function destroy($id)
     {
-        $data = DataUjiResistensi::findOrFail($id);
-        $data->delete();
+        $item = DataUjiResistensi::findOrFail($id);
+        $item->delete();
         return redirect()->route('input')->with('success', 'Data berhasil dihapus.');
     }
 }
