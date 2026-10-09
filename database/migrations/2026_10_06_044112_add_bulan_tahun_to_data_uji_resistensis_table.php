@@ -8,9 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('data_uji_resistensis', function (Blueprint $table) {
-            $table->integer('tahun')->after('bulan');
-        });
+        if (!Schema::hasColumn('data_uji_resistensis', 'tahun')) {
+            Schema::table('data_uji_resistensis', function (Blueprint $table) {
+                $table->integer('tahun')->nullable();
+            });
+        }
     }
 
     public function down(): void

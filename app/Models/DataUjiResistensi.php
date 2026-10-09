@@ -11,7 +11,7 @@ class DataUjiResistensi extends Model
 
     protected $fillable = [
         'no',
-        'bulan',
+        'tahun',
         'provinsi_id',
         'kabupaten_id',
         'jenis_nyamuk',
