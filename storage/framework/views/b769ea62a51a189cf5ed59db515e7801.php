@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SIMPEL BBLKL</title>
 
-    {{-- 1. Leaflet CSS --}}
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 
-    {{-- 2. Tailwind v4 (satu-satunya CDN yang bisa diakses) --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    {{-- 3. Fix Tailwind v4 preflight yang merusak Leaflet tile --}}
+    
     <style type="text/tailwindcss">
         @layer base {
             .leaflet-container img {
@@ -30,16 +30,16 @@
         #map { height: 520px; border-radius: 12px; }
     </style>
 
-    {{-- 4. Leaflet JS di head agar tersedia sebelum inline script --}}
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </head>
 <body class="bg-slate-100 text-slate-800">
 
-@include('sidebar')
+<?php echo $__env->make('sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <main class="ml-64 min-h-screen">
 
-    {{-- TOPBAR --}}
+    
     <header class="sticky top-0 z-40 flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8 shadow-sm">
         <div>
             <h1 class="text-xl font-bold text-slate-800">Dashboard</h1>
@@ -47,35 +47,36 @@
         </div>
         <div class="flex items-center gap-3">
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 font-semibold text-white">
-                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                <?php echo e(strtoupper(substr(auth()->user()->name ?? 'A', 0, 1))); ?>
+
             </div>
             <div>
-                <p class="text-sm font-semibold text-slate-800">{{ auth()->user()->name ?? 'Admin' }}</p>
-                <p class="text-xs text-slate-500">{{ auth()->user()->username ?? '' }}</p>
+                <p class="text-sm font-semibold text-slate-800"><?php echo e(auth()->user()->name ?? 'Admin'); ?></p>
+                <p class="text-xs text-slate-500"><?php echo e(auth()->user()->username ?? ''); ?></p>
             </div>
         </div>
     </header>
 
     <section class="p-8">
 
-        {{-- WELCOME --}}
+        
         <div class="mb-8 flex items-center justify-between">
             <div>
                 <h2 class="text-2xl font-bold text-slate-800">Selamat Datang 👋</h2>
-                <p class="mt-1 text-sm text-slate-500">Ringkasan data uji resistensi nyamuk BBLKL tahun {{ $tahun }}.</p>
+                <p class="mt-1 text-sm text-slate-500">Ringkasan data uji resistensi nyamuk BBLKL tahun <?php echo e($tahun); ?>.</p>
             </div>
-            <a href="{{ route('input') }}" class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+            <a href="<?php echo e(route('input')); ?>" class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 + Input Data
             </a>
         </div>
 
-        {{-- STAT CARDS --}}
+        
         <div class="mb-6 grid grid-cols-2 gap-5 xl:grid-cols-4">
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-slate-500">Total Pengujian</p>
-                        <h3 class="mt-2 text-3xl font-bold text-slate-800">{{ number_format($totalPengujian) }}</h3>
+                        <h3 class="mt-2 text-3xl font-bold text-slate-800"><?php echo e(number_format($totalPengujian)); ?></h3>
                         <p class="mt-1 text-xs font-medium text-blue-600">Semua tahun</p>
                     </div>
                     <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
@@ -89,9 +90,9 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-slate-500">Resisten</p>
-                        <h3 class="mt-2 text-3xl font-bold text-red-600">{{ number_format($totalResisten) }}</h3>
+                        <h3 class="mt-2 text-3xl font-bold text-red-600"><?php echo e(number_format($totalResisten)); ?></h3>
                         <p class="mt-1 text-xs font-medium text-red-500">
-                            @if($totalPengujian > 0) {{ round(($totalResisten/$totalPengujian)*100) }}% dari total @else 0% @endif
+                            <?php if($totalPengujian > 0): ?> <?php echo e(round(($totalResisten/$totalPengujian)*100)); ?>% dari total <?php else: ?> 0% <?php endif; ?>
                         </p>
                     </div>
                     <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-red-100 text-xl">🔴</div>
@@ -101,9 +102,9 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-slate-500">Rentan</p>
-                        <h3 class="mt-2 text-3xl font-bold text-green-600">{{ number_format($totalRentan) }}</h3>
+                        <h3 class="mt-2 text-3xl font-bold text-green-600"><?php echo e(number_format($totalRentan)); ?></h3>
                         <p class="mt-1 text-xs font-medium text-green-500">
-                            @if($totalPengujian > 0) {{ round(($totalRentan/$totalPengujian)*100) }}% dari total @else 0% @endif
+                            <?php if($totalPengujian > 0): ?> <?php echo e(round(($totalRentan/$totalPengujian)*100)); ?>% dari total <?php else: ?> 0% <?php endif; ?>
                         </p>
                     </div>
                     <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-xl">🟢</div>
@@ -113,9 +114,9 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-slate-500">Toleran</p>
-                        <h3 class="mt-2 text-3xl font-bold text-yellow-600">{{ number_format($totalToleran) }}</h3>
+                        <h3 class="mt-2 text-3xl font-bold text-yellow-600"><?php echo e(number_format($totalToleran)); ?></h3>
                         <p class="mt-1 text-xs font-medium text-yellow-500">
-                            @if($totalPengujian > 0) {{ round(($totalToleran/$totalPengujian)*100) }}% dari total @else 0% @endif
+                            <?php if($totalPengujian > 0): ?> <?php echo e(round(($totalToleran/$totalPengujian)*100)); ?>% dari total <?php else: ?> 0% <?php endif; ?>
                         </p>
                     </div>
                     <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-100 text-xl">🟡</div>
@@ -123,7 +124,7 @@
             </div>
         </div>
 
-        {{-- PETA --}}
+        
         <div class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div class="mb-4">
                 <h3 class="text-lg font-bold text-slate-800">Peta Sebaran Hasil Uji</h3>
@@ -139,14 +140,14 @@
             </div>
         </div>
 
-        {{-- DATA TERBARU --}}
+        
         <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div class="flex items-center justify-between border-b border-slate-200 p-6">
                 <div>
                     <h3 class="text-lg font-bold">Data Pemeriksaan Terbaru</h3>
                     <p class="text-sm text-slate-500">10 data terakhir yang dimasukkan</p>
                 </div>
-                <a href="{{ route('input') }}" class="text-sm font-semibold text-blue-600 hover:underline">Lihat Semua →</a>
+                <a href="<?php echo e(route('input')); ?>" class="text-sm font-semibold text-blue-600 hover:underline">Lihat Semua →</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
@@ -163,34 +164,34 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
-                        @forelse($dataTerbaru as $item)
+                        <?php $__empty_1 = true; $__currentLoopData = $dataTerbaru; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                         <tr class="transition hover:bg-slate-50">
-                            <td class="px-5 py-3 text-center text-slate-400">{{ $loop->iteration }}</td>
-                            <td class="px-5 py-3 font-medium">{{ $item->provinsi->nama_provinsi ?? '-' }}</td>
-                            <td class="px-5 py-3 text-slate-600">{{ $item->kabupaten->nama_kabupaten ?? '-' }}</td>
+                            <td class="px-5 py-3 text-center text-slate-400"><?php echo e($loop->iteration); ?></td>
+                            <td class="px-5 py-3 font-medium"><?php echo e($item->provinsi->nama_provinsi ?? '-'); ?></td>
+                            <td class="px-5 py-3 text-slate-600"><?php echo e($item->kabupaten->nama_kabupaten ?? '-'); ?></td>
                             <td class="px-5 py-3">
-                                <span class="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">{{ $item->jenis_nyamuk }}</span>
+                                <span class="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700"><?php echo e($item->jenis_nyamuk); ?></span>
                             </td>
-                            <td class="px-5 py-3 text-slate-600">{{ $item->insektisida }}</td>
-                            <td class="px-5 py-3 text-slate-600">{{ $item->metode }}</td>
-                            <td class="px-5 py-3 text-right font-bold">{{ number_format($item->sampel_diperiksa) }}</td>
+                            <td class="px-5 py-3 text-slate-600"><?php echo e($item->insektisida); ?></td>
+                            <td class="px-5 py-3 text-slate-600"><?php echo e($item->metode); ?></td>
+                            <td class="px-5 py-3 text-right font-bold"><?php echo e(number_format($item->sampel_diperiksa)); ?></td>
                             <td class="px-5 py-3 text-center">
-                                @if($item->status === 'resisten')
+                                <?php if($item->status === 'resisten'): ?>
                                     <span class="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-700">🔴 Resisten</span>
-                                @elseif($item->status === 'rentan')
+                                <?php elseif($item->status === 'rentan'): ?>
                                     <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-700">🟢 Rentan</span>
-                                @else
+                                <?php else: ?>
                                     <span class="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-bold text-yellow-700">🟡 Toleran</span>
-                                @endif
+                                <?php endif; ?>
                             </td>
                         </tr>
-                        @empty
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                         <tr>
                             <td colspan="8" class="px-5 py-12 text-center text-sm text-slate-400">
-                                Belum ada data. <a href="{{ route('input') }}" class="text-blue-600 hover:underline">Input data sekarang →</a>
+                                Belum ada data. <a href="<?php echo e(route('input')); ?>" class="text-blue-600 hover:underline">Input data sekarang →</a>
                             </td>
                         </tr>
-                        @endforelse
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -209,7 +210,7 @@
 
     setTimeout(function () { map.invalidateSize(); }, 300);
 
-    var rawData = @json($data);
+    var rawData = <?php echo json_encode($data, 15, 512) ?>;
 
     function color(status) {
         return status === 'resisten' ? '#ef4444'
@@ -275,4 +276,4 @@
 </script>
 
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\SimpelBBLK\resources\views/dashboard.blade.php ENDPATH**/ ?>

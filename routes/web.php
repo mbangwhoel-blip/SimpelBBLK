@@ -78,4 +78,24 @@ Route::middleware('auth')->group(function () {
         return view('laporan');
     })->name('laporan');
 
+    // ── DATA MENU ────────────────────────────────────────
+    Route::get('/import', [App\Http\Controllers\ImportExportController::class, 'indexImport'])->name('import.index');
+    Route::post('/import', [App\Http\Controllers\ImportExportController::class, 'import'])->name('import.upload');
+    Route::get('/export', [App\Http\Controllers\ImportExportController::class, 'indexExport'])->name('export.index');
+    Route::get('/export/download', [App\Http\Controllers\ImportExportController::class, 'export'])->name('export.download');
+    Route::get('/export/template', [App\Http\Controllers\ImportExportController::class, 'downloadTemplate'])->name('export.template');
+
+    // ── MASTER DATA ──────────────────────────────────────
+    Route::get('/master/wilayah', [App\Http\Controllers\WilayahController::class, 'index'])->name('wilayah.index');
+    Route::post('/master/wilayah', [App\Http\Controllers\WilayahController::class, 'store'])->name('wilayah.store');
+    Route::get('/master/wilayah/{id}/edit', [App\Http\Controllers\WilayahController::class, 'editKoordinat'])->name('wilayah.edit');
+    Route::put('/master/wilayah/{id}', [App\Http\Controllers\WilayahController::class, 'updateKoordinat'])->name('wilayah.update');
+
+    Route::get('/master/unit', [App\Http\Controllers\UnitController::class, 'index'])->name('unit.index');
+    Route::get('/master/unit/create', [App\Http\Controllers\UnitController::class, 'create'])->name('unit.create');
+    Route::post('/master/unit', [App\Http\Controllers\UnitController::class, 'store'])->name('unit.store');
+    Route::get('/master/unit/{id}/edit', [App\Http\Controllers\UnitController::class, 'edit'])->name('unit.edit');
+    Route::put('/master/unit/{id}', [App\Http\Controllers\UnitController::class, 'update'])->name('unit.update');
+    Route::delete('/master/unit/{id}', [App\Http\Controllers\UnitController::class, 'destroy'])->name('unit.destroy');
+
 });

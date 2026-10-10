@@ -3,7 +3,7 @@
 
 <aside class="fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-slate-900 text-white shadow-xl">
 
-    {{-- LOGO --}}
+    
     <div class="flex h-16 shrink-0 items-center gap-3 border-b border-slate-700 px-6">
 
         <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600">
@@ -23,7 +23,7 @@
     </div>
 
 
-    {{-- MENU --}}
+    
     <nav class="flex-1 overflow-y-auto px-4 py-4">
 
         <p class="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -31,12 +31,12 @@
         </p>
 
 
-        {{-- DASHBOARD --}}
-        <a href="{{ route('dashboard') }}"
+        
+        <a href="<?php echo e(route('dashboard')); ?>"
            class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 transition
-           {{ request()->routeIs('dashboard') 
+           <?php echo e(request()->routeIs('dashboard') 
                 ? 'bg-blue-600 text-white' 
-                : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
 
             <svg class="h-6 w-6"
                  fill="none"
@@ -53,12 +53,12 @@
         </a>
 
 
-        {{-- INPUT BULANAN --}}
-        <a href="{{ route('input') }}"
+        
+        <a href="<?php echo e(route('input')); ?>"
             class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 transition
-            {{ request()->routeIs('input') 
+            <?php echo e(request()->routeIs('input') 
                 ? 'bg-blue-600 text-white'
-                : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
 
             <svg
                 class="h-5 w-5"
@@ -82,16 +82,16 @@
             </span>
         </a>
 
-        {{-- DATA --}}
+        
         <p class="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Data
         </p>
 
 
-        {{-- IMPORT --}}
-        <a href="{{ route('import.index') }}"
+        
+        <a href="<?php echo e(route('import.index')); ?>"
            class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition
-           {{ request()->routeIs('import*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+           <?php echo e(request()->routeIs('import*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/>
             </svg>
@@ -99,10 +99,10 @@
         </a>
 
 
-        {{-- EXPORT --}}
-        <a href="{{ route('export.index') }}"
+        
+        <a href="<?php echo e(route('export.index')); ?>"
            class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition
-           {{ request()->routeIs('export*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+           <?php echo e(request()->routeIs('export*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M17 10l-5-5m0 0L7 10m5-5v12"/>
             </svg>
@@ -110,16 +110,16 @@
         </a>
 
 
-        {{-- MASTER DATA --}}
+        
         <p class="mb-2 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
             Master Data
         </p>
 
 
-        {{-- WILAYAH --}}
-        <a href="{{ route('wilayah.index') }}"
+        
+        <a href="<?php echo e(route('wilayah.index')); ?>"
            class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition
-           {{ request()->routeIs('wilayah*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+           <?php echo e(request()->routeIs('wilayah*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21s7-5.4 7-11a7 7 0 10-14 0c0 5.6 7 11 7 11z"/>
                 <circle cx="12" cy="10" r="2.5"/>
@@ -128,10 +128,10 @@
         </a>
 
 
-        {{-- UNIT --}}
-        <a href="{{ route('unit.index') }}"
+        
+        <a href="<?php echo e(route('unit.index')); ?>"
            class="mb-1 flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition
-           {{ request()->routeIs('unit*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+           <?php echo e(request()->routeIs('unit*') ? 'bg-blue-600 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'); ?>">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16M9 7h2m-2 4h2m4-4h2m-2 4h2"/>
             </svg>
@@ -141,29 +141,32 @@
     </nav>
 
 
-    {{-- USER --}}
+    
     <div class="shrink-0 border-t border-slate-700 p-4">
         <div class="flex items-center gap-3">
 
             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 font-bold text-white">
-                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                <?php echo e(strtoupper(substr(auth()->user()->name ?? 'A', 0, 1))); ?>
+
             </div>
 
             <div class="min-w-0 flex-1">
 
                 <p class="truncate text-sm font-semibold text-white">
-                    {{ auth()->user()->name ?? 'Admin' }}
+                    <?php echo e(auth()->user()->name ?? 'Admin'); ?>
+
                 </p>
 
                 <p class="truncate text-xs text-slate-400">
-                    {{ auth()->user()->username ?? '' }}
+                    <?php echo e(auth()->user()->username ?? ''); ?>
+
                 </p>
 
             </div>
 
-            {{-- LOGOUT --}}
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
+            
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
                 <button
                     type="submit"
                     class="rounded-lg p-2 text-slate-400 transition hover:bg-slate-800 hover:text-red-400"
@@ -187,4 +190,4 @@
 
     </div>
 
-</aside>
+</aside><?php /**PATH C:\xampp\htdocs\SimpelBBLK\resources\views/sidebar.blade.php ENDPATH**/ ?>
