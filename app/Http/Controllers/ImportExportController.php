@@ -74,21 +74,35 @@ class ImportExportController extends Controller
                     // Cari kabupaten — abaikan prefiks Kab/Kota/Kabupaten, cocokkan ke master
                     $kabNama    = trim((string) $val(['kabupaten','kabupat','kabkota','kabupatenkota','kabupaten/kota','kotakabupaten','kab','kota','nama_kabupaten']));
                     $kabupaten  = $this->matchKabupaten($provinsi->id, $kabNama);
-                    if (!$kabupaten) { $errors[] = "Baris $rowNum: Kabupaten \"$kabNama\" tidak ditemukan di ".$provinsi->nama_provinsi."."; continue; }
+                    if (!$kabupaten) {
+                        $cleanName = trim(preg_replace('/^(kab\.?|kota|kabupaten|adm\.?|administrasi)\s+/i', '', $kabNama));
+                        if ($cleanName !== '') {
+                            $kabupaten = Kabupaten::create([
+                                'provinsi_id'    => $provinsi->id,
+                                'nama_kabupaten' => ucwords($cleanName),
+                            ]);
+                        } else {
+                            $errors[] = "Baris $rowNum: Kabupaten \"$kabNama\" tidak ditemukan di ".$provinsi->nama_provinsi.".";
+                            continue;
+                        }
+                    }
 
-                    // Tentukan status dari kolom resisten/rentan/toleran/terduga
+                    // Tentukan status dari kolom resisten/rentan/toleran/terduga (dukung v, x, ✓, ya, 1, dll.)
+                    $isMarked = fn($v) => in_array(strtolower(trim((string)$v)), ['v', 'ya', '1', 'x', '✓', '+', 'y', 'true', 'yes']);
                     $status = 'resisten';
-                    $rVal = strtolower(trim((string) $val(['resisten'])));
-                    $nVal = strtolower(trim((string) $val(['rentan'])));
-                    $tVal = strtolower(trim((string) $val(['toleran'])));
-                    $gVal = strtolower(trim((string) $val(['terdugaresisten','terduga'])));
-                    if ($nVal === 'v' || $nVal === 'ya' || $nVal === '1') $status = 'rentan';
-                    elseif ($tVal === 'v' || $tVal === 'ya' || $tVal === '1') $status = 'toleran';
-                    elseif ($gVal === 'v' || $gVal === 'ya' || $gVal === '1') $status = 'toleran'; // terduga resisten = toleran
-                    elseif ($rVal === 'v' || $rVal === 'ya' || $rVal === '1') $status = 'resisten';
-                    // Jika ada kolom status teks
+                    if ($isMarked($val(['rentan']))) {
+                        $status = 'rentan';
+                    } elseif ($isMarked($val(['toleran'])) || $isMarked($val(['terdugaresisten','terduga']))) {
+                        $status = 'toleran';
+                    } elseif ($isMarked($val(['resisten']))) {
+                        $status = 'resisten';
+                    }
+
+                    // Jika ada kolom status teks langsung
                     $statusTeks = strtolower(trim((string) $val(['status','statusresisten','statusresistensi'])));
-                    if (in_array($statusTeks, ['resisten','rentan','toleran'])) $status = $statusTeks;
+                    if (in_array($statusTeks, ['resisten','rentan','toleran'])) {
+                        $status = $statusTeks;
+                    }
 
                     // Mutasi: Ya/Tidak -> Ya=ada, Tidak=null
                     $mutasi = trim((string) $val(['mutasi']));
