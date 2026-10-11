@@ -114,16 +114,9 @@
                 </div>
                 <div>
                     <h2 class="text-base font-bold text-slate-800">Form Input Data</h2>
-                    <p class="text-xs text-slate-500">Isi data di bawah ini lalu klik Simpan Data</p>
+                    <p class="text-xs text-slate-500">Lengkapi formulir di bawah ini lalu klik tombol Simpan Data</p>
                 </div>
             </div>
-            <button type="submit" form="formInput"
-                class="flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-                Simpan Data
-            </button>
         </div>
 
         {{-- Form --}}
@@ -259,27 +252,24 @@
                     {{-- / grid field --}}
 
                 </div>
-                {{-- / card entri pertama --}}
+                {{-- / form content --}}
 
-            </div>
-            {{-- / entry container --}}
+                {{-- Footer form --}}
+                <div class="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-6 py-4">
+                    <p class="text-xs text-slate-500">
+                        <span class="font-bold text-red-500">*</span> Wajib diisi
+                    </p>
+                    <button type="submit"
+                        class="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 active:scale-95">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Simpan Data
+                    </button>
+                </div>
 
-            {{-- Footer form --}}
-            <div class="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-6 py-4">
-                <p class="text-xs text-slate-500">
-                    <span id="entryCount">1</span> entri siap disimpan
-                </p>
-                <button type="submit"
-                    class="flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 active:scale-95">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    Simpan
-                </button>
-            </div>
-
-        </form>
-    </section>
+            </form>
+        </section>
 
     {{-- ═══════════════════════════════════════════════════════
          TABEL DATA TERSIMPAN
@@ -387,128 +377,6 @@
 
 </main>
 
-{{-- ═══════════════════════════════════════════════════════
-     CARD TEMPLATE (di-render server, di-clone JS)
-═══════════════════════════════════════════════════════ --}}
-<template id="cardTemplate">
-    <div class="entry-card relative rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:border-blue-200 hover:shadow-sm" data-index="__IDX__">
-        <div class="mb-4 flex items-center justify-between">
-            <span class="entry-badge inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-3 py-1 text-xs font-bold text-white">
-                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
-                </svg>
-                <span class="entry-badge-num">Entri #__NUM__</span>
-            </span>
-            <button type="button" class="btnHapusCard flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-500 transition hover:bg-red-50">
-                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4M3 7h18"/>
-                </svg>
-                Hapus Entri
-            </button>
-        </div>
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Provinsi <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][provinsi_id]" class="provinsi w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-                    <option value="">— Pilih Provinsi —</option>
-                    @foreach ($provinsis as $p)
-                        <option value="{{ $p->id }}">{{ $p->nama_provinsi }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Kota / Kabupaten <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][kabupaten_id]" class="kabupaten w-full rounded-xl border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm text-slate-500 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" disabled required>
-                    <option value="">Pilih provinsi dulu</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Alamat <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                <input type="text" name="rows[__IDX__][alamat]" placeholder="Contoh: Desa Sindoro..."
-                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jenis Nyamuk <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][jenis_nyamuk]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-                    <option value="">— Pilih Jenis —</option>
-                    <option>Ae. aegypti</option><option>Ae. albopictus</option>
-                    <option>Aedes sp</option><option>Culex sp</option>
-                    <option>Anopheles</option><option>An. aconitus</option>
-                    <option>An. barbirostris</option><option>An. farauti s.s</option>
-                    <option>An. Farauti</option><option>An. hyrcanus s.l.</option>
-                    <option>An. indefinitus</option><option>An. kochi</option>
-                    <option>An. koliensis</option><option>An. letifer</option>
-                    <option>An. parensis</option><option>An. peditaeniatus</option>
-                    <option>An. punctulatus s.l.</option><option>An. sundaicus s.l.</option>
-                    <option>An. tessellatus</option><option>An. Vagus</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Insektisida <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][insektisida]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-                    <option value="">— Pilih Insektisida —</option>
-                    <option>Alphacypermethrin</option><option>Bendiocarb</option>
-                    <option>Cypermethrin</option><option>Cyfluthrin</option>
-                    <option>Deltamethrin</option><option>Deltamethrin 0,025%</option>
-                    <option>Lambda-cyhalothrin 0,0025%</option><option>Lamdacyhalothrin</option>
-                    <option>Malathion</option><option>Permethrin</option>
-                    <option>Sipermethrin</option><option>Temefos (Abate)</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Metode Uji <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][metode]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-                    <option value="">— Pilih Metode —</option>
-                    <option>CDC bottle adults</option><option>CDC bottle bioassay</option>
-                    <option>Sequencing</option><option>WHO larval bioassay</option>
-                    <option>WHO standard bioassay</option><option>WHO susceptibility test</option>
-                    <option>WHO test kit adults</option><option>WHO Tube Bioassay</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jumlah Sampel <span class="text-red-400 normal-case">*</span></label>
-                <input type="number" name="rows[__IDX__][sampel_diperiksa]" min="1" placeholder="Contoh: 25"
-                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Status Resistensi <span class="text-red-400 normal-case">*</span></label>
-                <select name="rows[__IDX__][status]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-                    <option value="">— Pilih Status —</option>
-                    <option value="resisten">🔴 Resisten</option>
-                    <option value="rentan">🟢 Rentan</option>
-                    <option value="toleran">🟡 Toleran</option>
-                </select>
-            </div>
-
-
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Mutasi <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                <input type="text" name="rows[__IDX__][mutasi]" placeholder="Contoh: kdr, ace-1, Rdl..."
-                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Bulan <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                <select name="rows[__IDX__][bulan]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
-                    <option value="">— Pilih Bulan —</option>
-                    <option>Januari</option><option>Februari</option><option>Maret</option>
-                    <option>April</option><option>Mei</option><option>Juni</option>
-                    <option>Juli</option><option>Agustus</option><option>September</option>
-                    <option>Oktober</option><option>November</option><option>Desember</option>
-                </select>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Tahun <span class="text-red-400 normal-case">*</span></label>
-                <input type="number" name="rows[__IDX__][tahun]" value="{{ date('Y') }}" min="2000" max="2099"
-                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
-            </div>
-            <div class="md:col-span-2 xl:col-span-3">
-                <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Publikasi / Sumber <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                <input type="text" name="rows[__IDX__][publikasi]" placeholder="Contoh: URL jurnal atau nama file sumber..."
-                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
-            </div>
-        </div>
-    </div>
-</template>
 
 {{-- MODAL EDIT --}}
 <div id="editModal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/50 px-4 py-6">
@@ -700,84 +568,19 @@ function loadKabupaten(provSel, kabSel, selectedId) {
         });
 }
 
-/* ═══ ATTACH EVENTS KE CARD ════════════════════════════ */
-function attachCardEvents(card) {
-    const prov = card.querySelector('.provinsi');
-    const kab  = card.querySelector('.kabupaten');
-    const btn  = card.querySelector('.btnHapusCard');
-
-    if (prov && kab) {
-        prov.addEventListener('change', () => loadKabupaten(prov, kab, null));
-    }
-    if (btn) {
-        btn.addEventListener('click', () => {
-            const cards = document.querySelectorAll('.entry-card');
-            if (cards.length <= 1) return;
-            card.remove();
-            reindexCards();
-        });
-    }
-}
-
-/* ═══ REINDEX SEMUA CARD ═══════════════════════════════ */
-function reindexCards() {
-    const cards = document.querySelectorAll('.entry-card');
-    cards.forEach((card, i) => {
-        // Update badge
-        const badgeNum = card.querySelector('.entry-badge-num');
-        if (badgeNum) badgeNum.textContent = 'Entri #' + (i + 1);
-
-        // Reindex semua name
-        card.querySelectorAll('[name]').forEach(el => {
-            el.name = el.name.replace(/rows\[\d+\]/, 'rows[' + i + ']');
-        });
-
-        // Update data-index
-        card.dataset.index = i;
-
-        // Tombol hapus — disable jika hanya 1 card
-        const btn = card.querySelector('.btnHapusCard');
-        if (!btn) return;
-        if (cards.length <= 1) {
-            btn.classList.add('opacity-30', 'cursor-not-allowed');
-        } else {
-            btn.classList.remove('opacity-30', 'cursor-not-allowed');
-        }
-    });
-
-    // Update counter
-    const counter = document.getElementById('entryCount');
-    if (counter) counter.textContent = cards.length;
-}
-
-/* ═══ TAMBAH INPUT BARU ════════════════════════════════ */
-document.getElementById('btnTambahInput').addEventListener('click', function () {
-    const cards    = document.querySelectorAll('.entry-card');
-    const idx      = cards.length;
-    const template = document.getElementById('cardTemplate');
-    const clone    = template.content.cloneNode(true);
-    const card     = clone.querySelector('.entry-card');
-
-    // Ganti __IDX__ dan __NUM__
-    card.querySelectorAll('[name]').forEach(el => {
-        el.name = el.name.replace('__IDX__', idx);
-    });
-    card.dataset.index = idx;
-    const badgeNum = card.querySelector('.entry-badge-num');
-    if (badgeNum) badgeNum.textContent = 'Entri #' + (idx + 1);
-
-    document.getElementById('entryContainer').appendChild(card);
-    attachCardEvents(document.querySelector('.entry-card:last-child'));
-    reindexCards();
-
-    // Scroll ke card baru
-    document.querySelector('.entry-card:last-child').scrollIntoView({ behavior: 'smooth', block: 'center' });
-});
-
-/* ═══ INIT CARD PERTAMA ════════════════════════════════ */
+/* ═══ INIT DROPDOWN KABUPATEN FORM UTAMA ═══════════════ */
 document.addEventListener('DOMContentLoaded', function () {
-    const firstCard = document.querySelector('.entry-card');
-    if (firstCard) { attachCardEvents(firstCard); reindexCards(); }
+    const provSel = document.getElementById('inputProvinsi');
+    const kabSel  = document.getElementById('inputKabupaten');
+    if (provSel && kabSel) {
+        provSel.addEventListener('change', function () {
+            loadKabupaten(provSel, kabSel, null);
+        });
+        @if(old('provinsi_id'))
+            provSel.value = "{{ old('provinsi_id') }}";
+            loadKabupaten(provSel, kabSel, "{{ old('kabupaten_id') }}");
+        @endif
+    }
 });
 
 /* ═══ MODAL EDIT ═══════════════════════════════════════ */
