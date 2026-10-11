@@ -156,14 +156,14 @@
                         {{-- ALAMAT --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Alamat <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                            <input type="text" name="rows[0][alamat]" placeholder="Contoh: Desa Sindoro, Kec. Rowokele..."
+                            <input type="text" name="alamat" placeholder="Contoh: Desa Sindoro, Kec. Rowokele..."
                                 class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
                         </div>
 
                         {{-- JENIS NYAMUK --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jenis Nyamuk <span class="text-red-400 normal-case">*</span></label>
-                            <select name="rows[0][jenis_nyamuk]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                            <select name="jenis_nyamuk" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                                 <option value="">— Pilih Jenis —</option>
                                 <option>Ae. aegypti</option><option>Ae. albopictus</option>
                                 <option>Aedes sp</option><option>Culex sp</option>
@@ -181,7 +181,7 @@
                         {{-- INSEKTISIDA --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Insektisida <span class="text-red-400 normal-case">*</span></label>
-                            <select name="rows[0][insektisida]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                            <select name="insektisida" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                                 <option value="">— Pilih Insektisida —</option>
                                 <option>Alphacypermethrin</option><option>Bendiocarb</option>
                                 <option>Cypermethrin</option><option>Cyfluthrin</option>
@@ -195,7 +195,7 @@
                         {{-- METODE --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Metode Uji <span class="text-red-400 normal-case">*</span></label>
-                            <select name="rows[0][metode]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                            <select name="metode" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                                 <option value="">— Pilih Metode —</option>
                                 <option>CDC bottle adults</option><option>CDC bottle bioassay</option>
                                 <option>Sequencing</option><option>WHO larval bioassay</option>
@@ -207,14 +207,14 @@
                         {{-- SAMPEL --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Jumlah Sampel <span class="text-red-400 normal-case">*</span></label>
-                            <input type="number" name="rows[0][sampel_diperiksa]" min="1" placeholder="Contoh: 25"
+                            <input type="number" name="sampel_diperiksa" min="1" placeholder="Contoh: 25"
                                 class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                         </div>
 
                         {{-- STATUS --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Status Resistensi <span class="text-red-400 normal-case">*</span></label>
-                            <select name="rows[0][status]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
+                            <select name="status" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                                 <option value="">— Pilih Status —</option>
                                 <option value="resisten">🔴 Resisten</option>
                                 <option value="rentan">🟢 Rentan</option>
@@ -225,14 +225,14 @@
                         {{-- MUTASI --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Mutasi <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                            <input type="text" name="rows[0][mutasi]" placeholder="Contoh: kdr, ace-1, Rdl..."
+                            <input type="text" name="mutasi" placeholder="Contoh: kdr, ace-1, Rdl..."
                                 class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
                         </div>
 
                         {{-- BULAN --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Bulan <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                            <select name="rows[0][bulan]" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
+                            <select name="bulan" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
                                 <option value="">— Pilih Bulan —</option>
                                 <option>Januari</option><option>Februari</option><option>Maret</option>
                                 <option>April</option><option>Mei</option><option>Juni</option>
@@ -244,14 +244,14 @@
                         {{-- TAHUN --}}
                         <div>
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Tahun <span class="text-red-400 normal-case">*</span></label>
-                            <input type="number" name="rows[0][tahun]" value="{{ date('Y') }}" min="2000" max="2099"
+                            <input type="number" name="tahun" value="{{ date('Y') }}" min="2000" max="2099"
                                 class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition" required>
                         </div>
 
                         {{-- PUBLIKASI --}}
                         <div class="md:col-span-2 xl:col-span-3">
                             <label class="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500">Publikasi / Sumber <span class="text-slate-400 normal-case font-normal">(opsional)</span></label>
-                            <input type="text" name="rows[0][publikasi]" placeholder="Contoh: URL jurnal atau nama file sumber..."
+                            <input type="text" name="publikasi" placeholder="Contoh: URL jurnal atau nama file sumber..."
                                 class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition">
                         </div>
 
